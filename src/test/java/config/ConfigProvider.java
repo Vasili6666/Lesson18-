@@ -15,11 +15,23 @@ public class ConfigProvider {
                 throw new RuntimeException("browserstack.properties not found in resources");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to load browserstack.properties", e);
         }
     }
 
     public static String get(String key) {
-        return props.getProperty(key);
+        // Попробуем сначала environment variable с префиксом BS_
+        String envValue = System.getenv("BS_" + key.toUpperCase());
+        if (envValue != null && !envValue.isEmpty()) {
+            return envValue;
+        }
+
+        // Потом берём из properties
+        String propValue = props.getProperty(key);
+        if (propValue != null && !propValue.isEmpty()) {
+            return propValue;
+        }
+
+        throw new RuntimeException("Property or environment variable '" + key + "' not found");
     }
 }

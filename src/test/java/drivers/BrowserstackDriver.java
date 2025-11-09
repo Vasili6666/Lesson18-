@@ -26,14 +26,15 @@ public class BrowserstackDriver implements WebDriverProvider {
         // Приложение
         caps.setCapability("app", ConfigProvider.get("app"));
 
-        // Остальные настройки через bstack:options
+        // Настройки через bstack:options
         Map<String, Object> bstackOptions = Map.of(
                 "userName", ConfigProvider.get("userName"),
                 "accessKey", ConfigProvider.get("accessKey"),
                 "projectName", ConfigProvider.get("projectName"),
                 "buildName", ConfigProvider.get("buildName"),
                 "sessionName", ConfigProvider.get("sessionName"),
-                "appiumVersion", ConfigProvider.get("appiumVersion")
+                "appiumVersion", ConfigProvider.get("appiumVersion"),
+                "owner", ConfigProvider.get("owner")
         );
 
         caps.setCapability("bstack:options", bstackOptions);
