@@ -1,0 +1,29 @@
+HELP.md
+build/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Logs ###
+*.log
+logs/
+
+### System ###
+.DS_Store
+Thumbs.db
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
