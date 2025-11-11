@@ -5,11 +5,11 @@ import org.aeonbits.owner.Config;
 @Config.Sources("classpath:config/credentials.properties")
 public interface CredentialsConfig extends Config {
 
-    @Key("selenoid.login")
+   /* @Key("selenoid.login")
     String selenoidLogin();
 
     @Key("selenoid.password")
-    String selenoidPassword();
+    String selenoidPassword();*/
 
     @Key("user.name")
     String userName();

@@ -20,33 +20,22 @@ public class SearchTests_old {
 
         DesiredCapabilities caps = new DesiredCapabilities();
 
-        // Set your access credentials
+
         caps.setCapability("browserstack.user", "wert_xmAKrg"); // wert_a2HWjI
         caps.setCapability("browserstack.key", "uT7dVzwyyWncoVdHvWdE");// xUrGjbibNGsfDqzdNxLg
-
-        // Set URL of the application under test
         caps.setCapability("app", "bs://sample.app");
-
-        // Specify device and os_version for testing
         caps.setCapability("device", "Google Pixel 7 Pro");
         caps.setCapability("os_version", "13.0");
-
-
-
-
-        // Set other BrowserStack capabilities
         caps.setCapability("project", "First Java Project");
         caps.setCapability("build", "browserstack-build-1");
         caps.setCapability("name", "first_test");
 
 
-        // Initialise the remote Webdriver using BrowserStack remote URL
-        // and desired capabilities defined above
+
         RemoteWebDriver driver = new RemoteWebDriver(
                 new URL("https://hub.browserstack.com/wd/hub"), caps);
 
-        // Test case for the BrowserStack sample Android app.
-        // If you have uploaded your app, update the test case here.
+
         WebElement searchElement = (WebElement) new WebDriverWait(driver, Duration.ofSeconds(30)).until(
                 ExpectedConditions.elementToBeClickable(
                         AppiumBy.accessibilityId("Search Wikipedia")));
@@ -60,8 +49,6 @@ public class SearchTests_old {
                 "android.widget.TextView"));
         assert (allProductsName.size() > 0);
 
-
-        // Invoke driver.quit() after the test is done to indicate that the test is completed.
         driver.quit();
 
     }

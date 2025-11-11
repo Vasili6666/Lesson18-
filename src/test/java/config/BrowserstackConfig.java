@@ -15,6 +15,6 @@ public interface BrowserstackConfig extends Config {
     @Key("os_version")
     String osVersion();
 
-    @Key("platform")
-    String platform();
+    /*@Key("platform")
+    String platform();*/
 }

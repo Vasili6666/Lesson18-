@@ -21,7 +21,7 @@ public class TestBase {
 
     @BeforeAll
     static void setUp() {
-        // Устанавливаем платформу по умолчанию, если не задана
+
         String platform = getProperty("platform", "android");
         if (platform != null && !platform.trim().isEmpty()) {
             System.setProperty("platform", platform);
