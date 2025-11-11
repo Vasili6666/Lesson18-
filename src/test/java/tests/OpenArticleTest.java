@@ -2,14 +2,12 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
+import config.Locators;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static io.appium.java_client.AppiumBy.*;
-import static io.qameta.allure.Allure.step;
-
 
 public class OpenArticleTest extends TestBase {
 
@@ -17,22 +15,20 @@ public class OpenArticleTest extends TestBase {
     @DisplayName("Открытие статьи — успешный результат вне зависимости от ошибок")
     void openArticleTest() {
 
-        // Открыть поиск
-        $(accessibilityId("Search Wikipedia")).click();
+        // Открываем поиск
+        $(accessibilityId(Locators.searchButton())).click();
 
-        // Ввести запрос
-        $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("Selenide");
+        // Вводим запрос
+        $(id(Locators.searchField())).sendKeys("Selenide");
 
-        // Клик по любому результату
-        $$(id("org.wikipedia.alpha:id/page_list_item_title"))
-                .first()
-                .click();
+        // Кликаем по первому результату
+        $$(id(Locators.firstResult())).first().click();
 
-        // Если появляется окно с ошибкой — просто закрываем
-        if ($(id("org.wikipedia.alpha:id/error_text")).isDisplayed()) {
-            $(id("org.wikipedia.alpha:id/go_back_button")).click();
+        // Если появляется окно с ошибкой — закрываем
+        if ($(id(Locators.errorText())).exists() && $(id(Locators.errorText())).isDisplayed()) {
+            $(id(Locators.goBackButton())).click();
         }
 
-        // Всё, тест считается пройденным
+        // Тест считается успешным
     }
 }
