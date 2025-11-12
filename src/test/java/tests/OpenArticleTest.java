@@ -2,28 +2,24 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static com.codeborne.selenide.Selenide.*;
-import static io.appium.java_client.AppiumBy.*;
-
-
+import screens.SearchScreen;
+import screens.ArticleScreen;
 
 public class OpenArticleTest extends TestBase {
+
+    SearchScreen search = new SearchScreen();
+    ArticleScreen article = new ArticleScreen();
 
     @Test
     @DisplayName("Открытие статьи — успешный результат вне зависимости от ошибок")
     void openArticleTest() {
 
+        search.openSearch();
+        search.searchFor("Appium");
+        search.openFirstResult();
 
-        $(accessibilityId("Search Wikipedia")).click();
-        $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("Appium");
-        $$(id("org.wikipedia.alpha:id/page_list_item_title"))
-                .first()
-                .click();
-
-        if ($(id("org.wikipedia.alpha:id/error_text")).isDisplayed()) {
-            $(id("org.wikipedia.alpha:id/go_back_button")).click();
+        if (article.hasError()) {
+            article.goBack();
         }
-
-
     }
 }
