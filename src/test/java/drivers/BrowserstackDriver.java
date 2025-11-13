@@ -41,6 +41,8 @@ public class BrowserstackDriver implements WebDriverProvider {
         caps.setCapability("project", "First Java Project"); // название проекта
         caps.setCapability("build", "browserstack-build-1"); // идентификатор сборки
         caps.setCapability("name", "first_test"); // название конкретного теста
+        caps.setCapability("fullReset", true);
+        caps.setCapability("noReset", false);
 
         try {
             // Создаём новый RemoteWebDriver — он будет управлять устройством в облаке BrowserStack
