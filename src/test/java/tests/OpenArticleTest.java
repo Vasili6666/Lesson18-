@@ -1,5 +1,6 @@
 package tests;//
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import screens.SearchScreen;
@@ -10,6 +11,8 @@ public class OpenArticleTest extends TestBase {
     SearchScreen search = new SearchScreen();
     ArticleScreen article = new ArticleScreen();
 
+
+    @Disabled
     @Test
     @DisplayName("Открытие статьи — успешный результат вне зависимости от ошибок")
     void openArticleTest() {

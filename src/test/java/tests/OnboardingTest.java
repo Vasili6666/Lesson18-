@@ -2,25 +2,35 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import screens.OnboardingScreen;
 
-import static com.codeborne.selenide.Selenide.$;
-import static io.appium.java_client.AppiumBy.id;
-import static com.codeborne.selenide.Condition.text;
+import static io.qameta.allure.Allure.step;
 
 public class OnboardingTest extends TestBase {
 
+    OnboardingScreen onboarding = new OnboardingScreen();
+
     @Test
-    @DisplayName("Прохождение 2 экранов onboarding в Wikipedia")
-    void twoOnboardingScreensTest() {
+    @DisplayName("Прохождение онбординга и проверка текста на всех экранах")
+    void completeOnboardingTest() {
+        step("Проверить текст на первом экране и нажать Continue", () -> {
+            onboarding.checkFirstScreenText()
+                    .clickContinue();
+        });
 
-        // 1 экран
-        $(id("org.wikipedia:id/primaryTextView"))
-                .shouldHave(text("The free encyclopedia"));
-        $(id("org.wikipedia:id/fragment_onboarding_forward_button")).click();
+        step("Проверить текст на втором экране и нажать Continue", () -> {
+            onboarding.checkSecondScreenText()
+                    .clickContinue();
+        });
 
-        // 2 экран
-        $(id("org.wikipedia:id/primaryTextView"))
-                .shouldHave(text("New ways to explore"));
-        $(id("org.wikipedia:id/fragment_onboarding_forward_button")).click();
+        step("Проверить текст на третьем экране и нажать Continue", () -> {
+            onboarding.checkThirdScreenText()
+                    .clickContinue();
+        });
+
+        step("Проверить текст на четвертом экране", () -> {
+            onboarding.checkFourthScreenText();
+            // На последнем экране не нажимаем кнопку, только проверяем текст
+        });
     }
 }
