@@ -9,12 +9,9 @@ import org.aeonbits.owner.Config;
 })
 public interface BrowserstackConfig extends Config {
 
-    @Key("device")
+    @Key("deviceName")
     String device();
 
-    @Key("os_version")
+    @Key("platformVersion")
     String osVersion();
-
-    /*@Key("platform")
-    String platform();*/
 }
