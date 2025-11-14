@@ -1,5 +1,9 @@
 package tests;
 
+/*      ./gradlew clean test -DdeviceHost=emulation -Dplatform=android
+        ./gradlew clean test -DdeviceHost=real -Dplatform=android
+        ./gradlew clean test -DdeviceHost=browserstack -Dplatform=android
+*/
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import screens.OnboardingScreen;

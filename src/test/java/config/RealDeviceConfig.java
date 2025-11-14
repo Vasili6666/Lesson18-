@@ -14,6 +14,4 @@ public interface RealDeviceConfig extends Config {
     @Key("os_version")
     String osVersion();
 
-    @DefaultValue("android")
-    String platform();
 }
