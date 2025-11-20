@@ -20,32 +20,29 @@ public class BrowserstackDriver implements WebDriverProvider {
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         MutableCapabilities caps = new MutableCapabilities();
 
-        String platform = System.getProperty("platform", "android");
-        System.setProperty("platform", platform);
-
         CredentialsConfig credentials = ConfigFactory.create(CredentialsConfig.class);
         BrowserstackConfig browserstackConfig = ConfigFactory.create(BrowserstackConfig.class);
 
-        // Основные capabilities
-        caps.setCapability("platformName", "android");
-        caps.setCapability("appium:app", credentials.app());
-        caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:deviceName", browserstackConfig.device());  // deviceName
-        caps.setCapability("appium:platformVersion", browserstackConfig.osVersion());  // platformVersion
 
-        // BrowserStack options
+        caps.setCapability("platformName", "android");
+        caps.setCapability("appium:deviceName", browserstackConfig.device());
+        caps.setCapability("appium:platformVersion", browserstackConfig.osVersion());
+        caps.setCapability("appium:app", "bs://sample.app");
+        caps.setCapability("appium:automationName", "UiAutomator2");
+
+
         MutableCapabilities bstackOptions = new MutableCapabilities();
         bstackOptions.setCapability("userName", credentials.userName());
         bstackOptions.setCapability("accessKey", credentials.accessKey());
         bstackOptions.setCapability("projectName", "Wikipedia Tests");
         bstackOptions.setCapability("buildName", "build-1");
-        bstackOptions.setCapability("sessionName", "Onboarding Test");
+        bstackOptions.setCapability("sessionName", "Mobile Tests");
 
         caps.setCapability("bstack:options", bstackOptions);
 
         try {
-            return new RemoteWebDriver(
-                    new URL(credentials.browserstackUrl()), caps);
+            System.out.println("🔧 Creating BrowserStack driver...");
+            return new RemoteWebDriver(new URL(credentials.browserstackUrl()), caps);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

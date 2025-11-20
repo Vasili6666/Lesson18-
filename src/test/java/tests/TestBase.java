@@ -22,48 +22,81 @@ public class TestBase {
         String deviceHost = System.getProperty("deviceHost", "emulation");
         String platform = System.getProperty("platform", "android");
 
-        // Устанавливаем platform для конфигов
         System.setProperty("platform", platform);
-
-        // Выбираем драйвер в зависимости от deviceHost
-        switch (deviceHost) {
-            case "browserstack":
-                Configuration.browser = BrowserstackDriver.class.getName();
-                break;
-            case "emulation":
-                Configuration.browser = EmulationDriver.class.getName();
-                break;
-            case "real":
-                Configuration.browser = RealDeviceDriver.class.getName();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown deviceHost: " + deviceHost);
-        }
-
-        // Общие настройки
-        Configuration.browserSize = null;
-        Configuration.timeout = 30000;
 
         System.out.println("🚀 Запуск тестов:");
         System.out.println("📱 Platform: " + platform);
         System.out.println("🏠 DeviceHost: " + deviceHost);
+
+        switch (deviceHost) {
+            case "browserstack":
+                Configuration.browser = BrowserstackDriver.class.getName();
+                // ОСОБЫЕ НАСТРОЙКИ ДЛЯ BROWSERSTACK
+                setupBrowserStackConfig();
+                break;
+            case "emulation":
+                Configuration.browser = EmulationDriver.class.getName();
+                setupLocalConfig();
+                break;
+            case "real":
+                Configuration.browser = RealDeviceDriver.class.getName();
+                setupLocalConfig();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown deviceHost: " + deviceHost);
+        }
+    }
+
+    private static void setupBrowserStackConfig() {
+        // МИНИМАЛЬНЫЕ НАСТРОЙКИ для BrowserStack
+        Configuration.browserSize = null;
+        Configuration.timeout = 10000;
+
+        // ОТКЛЮЧАЕМ все проблемные настройки
+        Configuration.pageLoadStrategy = "none";
+        Configuration.remoteReadTimeout = 60000;
+        Configuration.remoteConnectionTimeout = 60000;
+
+        // Отключаем автоматические таймауты
+        System.setProperty("selenide.timeout", "10000");
+        System.setProperty("selenide.pageLoadStrategy", "none");
+    }
+
+    private static void setupLocalConfig() {
+        // Стандартные настройки для локальных устройств
+        Configuration.browserSize = null;
+        Configuration.timeout = 30000;
     }
 
     @BeforeEach
     void addAllureListener() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+        String deviceHost = System.getProperty("deviceHost", "emulation");
+        if ("browserstack".equals(deviceHost)) {
+            System.out.println("🎬 Starting BrowserStack test...");
+        }
+
         open();
     }
 
     @AfterEach
     void addAttachments() {
-        String sessionId = Selenide.sessionId().toString();
-        Attach.pageSource();
+        String deviceHost = System.getProperty("deviceHost", "emulation");
 
-        // Добавляем видео только для BrowserStack
-        if ("browserstack".equals(System.getProperty("deviceHost"))) {
-            Attach.addVideo(sessionId);
+        try {
+            String sessionId = Selenide.sessionId().toString();
+            System.out.println("📎 Session ID: " + sessionId);
+
+            Attach.pageSource();
+
+            if ("browserstack".equals(deviceHost)) {
+                Attach.addVideo(sessionId);
+            }
+        } catch (Exception e) {
+            System.out.println("⚠️ Could not get session ID for attachments: " + e.getMessage());
         }
+
         closeWebDriver();
     }
 }

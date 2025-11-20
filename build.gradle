@@ -44,6 +44,7 @@ dependencies {
             "commons-io:commons-io:$commonsVersion"
     )
 }
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -58,4 +59,25 @@ tasks.withType(Test) {
             exceptionFormat "short"
         }
     }
+}
+
+// Задача для BrowserStack - запускает только MobileTests
+task browserstackTest(type: Test) {
+    useJUnitPlatform {
+        includeTags("browserstack")
+    }
+    systemProperty "deviceHost", "browserstack"
+}
+
+// Задача для эмуляции и реальных устройств - запускает OnboardingTest и другие, кроме browserstack
+task localTest(type: Test) {
+    useJUnitPlatform {
+        excludeTags("browserstack")
+    }
+    systemProperty "deviceHost", "emulation" // или "real" - можно передавать через -DdeviceHost
+}
+
+// Задача по умолчанию - запускает все тесты на указанном устройстве
+test {
+    useJUnitPlatform()
 }
