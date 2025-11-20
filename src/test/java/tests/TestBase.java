@@ -48,22 +48,18 @@ public class TestBase {
     }
 
     private static void setupBrowserStackConfig() {
-        // МИНИМАЛЬНЫЕ НАСТРОЙКИ для BrowserStack
+
         Configuration.browserSize = null;
         Configuration.timeout = 10000;
-
-        // ОТКЛЮЧАЕМ все проблемные настройки
         Configuration.pageLoadStrategy = "none";
         Configuration.remoteReadTimeout = 60000;
         Configuration.remoteConnectionTimeout = 60000;
-
-        // Отключаем автоматические таймауты
         System.setProperty("selenide.timeout", "10000");
         System.setProperty("selenide.pageLoadStrategy", "none");
     }
 
     private static void setupLocalConfig() {
-        // Стандартные настройки для локальных устройств
+
         Configuration.browserSize = null;
         Configuration.timeout = 30000;
     }
