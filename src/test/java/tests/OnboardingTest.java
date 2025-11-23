@@ -1,10 +1,5 @@
 package tests;
 
-/*
-./gradlew browserstackTest -DdeviceHost=browserstack -Dplatform=android
-./gradlew localTest -DdeviceHost=emulation -Dplatform=android
-./gradlew localTest -DdeviceHost=real -Dplatform=android
-*/
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import screens.OnboardingScreen;
@@ -35,7 +30,6 @@ public class OnboardingTest extends TestBase {
 
         step("Проверить текст на четвертом экране", () -> {
             onboarding.checkFourthScreenText();
-            // На последнем экране не нажимаем кнопку, только проверяем текст
         });
     }
 }
