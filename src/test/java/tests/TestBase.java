@@ -1,3 +1,4 @@
+// [file name]: tests/TestBase.java
 package tests;
 
 import com.codeborne.selenide.Configuration;
@@ -19,22 +20,22 @@ public class TestBase {
     static void setUp() {
         Configuration.browser = EmulationDriver.class.getName();
         Configuration.browserSize = null;
-        Configuration.timeout = 60000; // Увеличиваем таймаут
+        Configuration.timeout = 60000;
 
-        System.out.println("🚀 Настройка теста...");
-        System.out.println("📱 Драйвер: EmulationDriver");
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+        System.out.println("🚀 Настройка тестового окружения...");
     }
 
     @BeforeEach
     void startDriver() {
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        System.out.println("🎬 Запускаем браузер...");
+        System.out.println("🎬 Инициализация драйвера...");
         open();
     }
 
     @AfterEach
     void addAttachments() {
-        System.out.println("📸 Делаем скриншот...");
+        System.out.println("📸 Сбор вложений для отчета...");
         Attach.screenshotAs("Final screenshot");
         Attach.pageSource();
         closeWebDriver();
