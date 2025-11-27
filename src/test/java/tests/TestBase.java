@@ -18,24 +18,25 @@ public class TestBase {
     @BeforeAll
     static void setUp() {
         Configuration.browser = EmulationDriver.class.getName();
-        setupLocalConfig();
-    }
-
-    private static void setupLocalConfig() {
         Configuration.browserSize = null;
-        Configuration.timeout = 30000;
+        Configuration.timeout = 60000; // Увеличиваем таймаут
+
+        System.out.println("🚀 Настройка теста...");
+        System.out.println("📱 Драйвер: EmulationDriver");
     }
 
     @BeforeEach
-    void addAllureListener() {
+    void startDriver() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        System.out.println("🎬 Запускаем браузер...");
         open();
     }
 
     @AfterEach
     void addAttachments() {
+        System.out.println("📸 Делаем скриншот...");
+        Attach.screenshotAs("Final screenshot");
         Attach.pageSource();
-        Attach.screenshotAs("Last screenshot");
         closeWebDriver();
     }
 }
