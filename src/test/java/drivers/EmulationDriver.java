@@ -28,7 +28,6 @@ public class EmulationDriver implements WebDriverProvider {
 
         UiAutomator2Options options = new UiAutomator2Options();
 
-
         options.setAutomationName(ANDROID_UIAUTOMATOR2)
                 .setPlatformName(ANDROID)
                 .setPlatformVersion(config.osVersion())

@@ -17,9 +17,11 @@ public class TestBase {
 
     @BeforeAll
     static void setUp() {
-        System.out.println("🚀 Запуск тестов на эмуляторе");
-
         Configuration.browser = EmulationDriver.class.getName();
+        setupLocalConfig();
+    }
+
+    private static void setupLocalConfig() {
         Configuration.browserSize = null;
         Configuration.timeout = 30000;
     }
@@ -32,8 +34,8 @@ public class TestBase {
 
     @AfterEach
     void addAttachments() {
-        Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
+        Attach.screenshotAs("Last screenshot");
         closeWebDriver();
     }
 }
