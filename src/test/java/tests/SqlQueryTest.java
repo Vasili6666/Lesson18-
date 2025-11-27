@@ -1,4 +1,3 @@
-// [file name]: tests/SqlQueryTest.java
 package tests;
 
 import helpers.Attach;

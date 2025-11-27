@@ -1,4 +1,3 @@
-// [file name]: config/EmulationConfig.java
 package config;
 
 import org.aeonbits.owner.Config;

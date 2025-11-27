@@ -1,4 +1,3 @@
-// [file name]: drivers/EmulationDriver.java
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;

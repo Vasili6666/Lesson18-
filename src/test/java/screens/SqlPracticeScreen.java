@@ -1,4 +1,3 @@
-// [file name]: screens/SqlPracticeScreen.java
 package screens;
 
 import com.codeborne.selenide.SelenideElement;
